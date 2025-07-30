@@ -10,11 +10,14 @@ function sleep(seconds) {
 
 // Gets Comment dropdowns on comments you've authored.
 function getDeleteCommentDropdowns() {
-    var dropdowns = [], buttons = [];
-    for (const dropdown of document.querySelectorAll(".artdeco-dropdown__trigger.artdeco-dropdown__trigger--placement-bottom.ember-view.comment-options-trigger.t-black--light.m0")) {
-        dropdowns.push(dropdown)
-    }
-    return dropdowns;
+    const buttons = document.querySelectorAll(
+        'button.artdeco-dropdown__trigger.artdeco-dropdown__trigger--placement-bottom.ember-view.artdeco-button.artdeco-button--1.artdeco-button--circle.artdeco-button--tertiary.artdeco-button--muted:not(.feed-shared-control-menu__trigger)'
+    );
+    // Filter buttons to ensure they are comment dropdowns (contain the specific SVG)
+    return Array.from(buttons).filter(button => {
+        const svg = button.querySelector('svg[data-test-icon="overflow-web-ios-small"]');
+        return svg !== null;
+    });
 }
 
 // Gets "Delete" button inside "Are you sure you want to delete your comment?" confirmation box.
